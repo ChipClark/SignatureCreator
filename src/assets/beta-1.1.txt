@@ -1,0 +1,8 @@
+Release Notes 
+v b1.1 - September 13, 2019
+
+Known Issues: 
+
+ - New User can be created with blank form
+
+ - Existing user data is selectable, but not editable

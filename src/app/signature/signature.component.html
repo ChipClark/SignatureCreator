@@ -1,0 +1,270 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+<div class="header-bar" >
+        <div class="container">
+          <div class="row">
+            <a href="/" class="col-2"><img class="header-img" alt="Allen Matkins" src="../../assets/AMStackedLogo.png"></a>
+            <div class="col-8">
+              <h1 class="header-tag">Email Signature Creator</h1>
+              <!-- <div class="greeting">Hello, {{userName}}</div> -->
+            </div>
+            <div class="col-2 rightcol">
+              <span class="confidential">Firm Confidential</span><br>
+            </div>
+          </div>
+        </div>
+</div>
+<div class="person-list">
+
+    <div class="container">
+        <p><a href="http://spam01/technology/trainingdepartment/TrainingBlog/Lists/Posts/Post.aspx?ID=149" target="_blank">Step-by-Step Instructions</a> (opens in a new window)</p>
+        
+        <div class="row" id="name_selector"> 
+            
+            <div class="col-6">
+                <div ng-controller="SelectHeaderController" class="userdetails" ng-cloak id="dropdown" >
+                    <mat-form-field layout="row">
+                        <mat-select placeholder="Name" class="useroptions" name="employeeName" [(value)]="selectedValue"  (click)="displayUserDetails()">
+                                <mat-option *ngFor="let person of people ; let i = index;" [value]="person.fullname" 
+                                    class="usernames">
+                                    {{person.fullname}}
+                                </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-4">
+                    <button mat-raised-button (click)="createNewUser()">New User</button>
+            </div>
+        </div>
+
+        <div *ngIf="selectedValue" class="row" id="existingUserForm" class="col">
+            <form [formGroup]="materials.checkboxForm" >
+                <div class="row useroptions"  >
+                        <mat-checkbox class="col-2" formControlName="EmployeeName" >Name</mat-checkbox> 
+                        <input matInput placeholder="EmployeeTitle" class="col-4" style="font-size: 12pt;" formControlName="EmployeeName_value" [value]="selectedValue" >
+                </div>
+                
+                <div class="row">
+                        <mat-checkbox class="col-2" formControlName="EmployeeTitle" >Title</mat-checkbox> 
+                        <input matInput placeholder="Employee Title" class="col-4" style="font-size: 12pt;" formControlName="EmployeeTitle_value" [value]="addTitle()" >
+                        <!-- <span class="col-7"><div *ngIf='checkStatus("EmployeeTitle")' [innerHTML]="addTitle()"></div></span> -->
+                </div>
+                <div class="row" *ngIf="isSecretary() && !isReply()">
+                        <mat-checkbox class="col-2" formControlName="SupportedAttorneys" >Supported Attorneys</mat-checkbox> 
+                        <span class="col-7" ><div *ngIf='checkStatus(SupportedAttorneys)' [innerHTML]="addSupportedAttorneys(selectedValue)"></div></span>
+                </div> 
+                <div class="row">
+                        <mat-checkbox class="col-2" formControlName="DirectPhone" >Direct</mat-checkbox> 
+                        <span class="col-7"><div [innerHTML]="getPhone(selectedValue, 'direct')"></div></span>
+                </div>
+                <div class="row"  *ngIf="!isSecretary()">
+                        <!-- <mat-checkbox *ngIf="!isReply()" class="col-2" formControlName="MainPhone" [checked]="setValue('MainPhone', true)" >Main</mat-checkbox> 
+                        <mat-checkbox *ngIf="isReply()" class="col-2" formControlName="MainPhone" [checked]="setValue('MainPhone', false)" >Main</mat-checkbox>  -->
+                        <mat-checkbox class="col-2" formControlName="MainPhone" >Main</mat-checkbox> 
+                        <span class="col-7"><div [innerHTML]="getPhone(selectedValue, 'main')"></div></span>
+                </div>
+                <div class="row" *ngIf="!isSecretary()">
+                        <mat-checkbox class="col-2" formControlName="MobilePhone" >Mobile</mat-checkbox> 
+                        <span class="col-7"><div  [innerHTML]="getPhone(selectedValue, 'mobile')"></div></span>
+                </div>
+                <!-- <div class="row">
+                        <mat-checkbox class="col-2" formControlName="Fax" >Fax</mat-checkbox> 
+                        <span class="col-7"><div [innerHTML]="getPhone(selectedValue, 'fax')"></div></span>
+                </div> -->
+                <div class="row">
+                        <mat-checkbox class="col-2" formControlName="Email" >Email</mat-checkbox> 
+                        <span class="col-7" ><div [innerHTML]='addEmailLink(selectedValue, "form")' ></div></span>
+                </div> 
+                <div class="row" *ngIf='!isReply()'>
+                        <mat-checkbox class="col-2" formControlName="FirmName"  >Firm Name</mat-checkbox> 
+                        <span class="col-7" >{{FirmName}}</span>
+                </div>
+                <div class="row" *ngIf='!isReply()'>
+                        <mat-checkbox class="col-2" formControlName="OfficeAddress"  *ngIf="checkStatus('OfficeAddress')" >Office Address</mat-checkbox> 
+                        <span class="col-7"><div [innerHTML]="addOfficeAddress(selectedValue)"></div></span>
+                </div>
+                <div class="row" *ngIf='!isReply()'>
+                        <mat-checkbox class="col-2" formControlName="Logo" >Logo</mat-checkbox> 
+                        <span class="col-7" ><div [innerHTML]="addLogo('form')"></div></span>
+                </div> 
+                
+                   
+            </form>
+            <div class="spacer"><hr /></div>
+            <div class="row" id="spacer">&nbsp;</div>
+    
+            <form [formGroup]="materials.SignatureType">
+                <mat-radio-group formControlName="sigtype" >
+                        Signature Type: &nbsp;
+
+                        <label>
+                                <input type="radio" value="standard" formControlName="sigtype">
+                                <span>&nbsp;Standard</span>
+                        </label>
+                        <label>&nbsp;
+                                <input type="radio" value="reply" formControlName="sigtype" >
+                                <span>&nbsp;Reply</span>
+                        </label>
+                </mat-radio-group> 
+            </form>
+            
+           
+        </div>
+        
+        
+        <div *ngIf="selectedValue" class="row" id="ExistingwUserLayout">
+                <div class="outerbox" >
+                        <div class="col editorbox" style="font-family: Lato, Arial, Helvetica, sans-serif; font-size: 12pt; font-weight:400; color:#464646; line-height: 16pt;">
+                                <div class="oneline">
+                                        <div *ngIf='materials.checkboxForm.value.EmployeeName' class="inline" >
+                                                <div [innerHTML]="addEmployee(selectedValue)"></div>
+                                        </div>
+                                </div>
+                                <div *ngIf="!isReply() && isSecretary() && materials.checkboxForm.value.SupportedAttorneys" class="oneline" >
+                                        <div [innerHTML]="addSupportedAttorneys(selectedValue)" class="inline" ></div>
+                                </div>
+
+                                <div class="oneLine" *ngIf='isReply()'> 
+                                        <div [innerHTML]='buildPhoneLine(selectedValue)'></div>
+                                </div>
+
+                                <div class="oneline" *ngIf='!isReply()' id="Non-Reply"  style="font-family: Lato, Arial;" > 
+                                        <div class="oneline" *ngIf='!isSecretary()' id="Non-Secretary">
+                                                <div *ngIf='materials.checkboxForm.value.Email' >
+                                                        <div [innerHTML]='buildPhoneLine(selectedValue)' ></div>
+                                                        <div [innerHTML]='addLine("EmailLink")' ></div></div>
+                                        </div>
+                                        <div class="oneline" *ngIf='isSecretary()' id="Secretary" style="font-family: Lato, Arial;" >
+                                                <div [innerHTML]='buildPhoneLine(selectedValue)'></div>
+                                        </div>
+                                </div>
+                                <div *ngIf='!isReply()' class="inline" style="font-family:Lato, sans-serif;">
+                                        <div *ngIf='materials.checkboxForm.value.FirmName'  >
+                                                {{FirmName}}
+                                        </div>
+                                        <div *ngIf='materials.checkboxForm.value.OfficeAddress && checkStatus("OfficeAddress")' ><div [innerHTML]='addLine("OfficeAddress")'></div></div>
+                                        <div [innerHTML]="addLogo('layout')"></div>
+                                </div>
+                                
+                        </div>
+                </div>
+        </div>
+
+        <div *ngIf="selectedValue" class="row" id="ExistingwUserLayout">
+                <button mat-raised-button (click)="buildFile()">Save</button>
+        </div>
+
+        <!--****************************************  
+            This is the NEW USER Section      
+        *****************************************-->
+
+        <div *ngIf="addNewUser" class="row" >
+                <form [formGroup]="materials.newUserForm" class="col">
+                        <div class="row useroptions">
+                                <mat-checkbox class="col-2" formControlName="cboxEmployeeName" >Employee Name</mat-checkbox> 
+                                <input matInput placeholder="Employee Name" class="col-4" style="font-size: 12pt;" formControlName="n_EmployeeName" >
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxBioURL" >Bio URL</mat-checkbox> 
+                                <input matInput placeholder="URL for Employee Biography" class="col-4" style="font-size: 10pt;"
+                                        formControlName="n_BioURL" matTooltip="Only used if the employee has an external accessible biography">
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxEmployeeTitle" >Title</mat-checkbox> 
+                                <input matInput placeholder="Employee Job Title" class="col-4" style="font-size: 10pt;" formControlName="n_EmployeeTitle" >
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxSupportedAttorneys" >Supported Attorney</mat-checkbox> 
+                                <input matInput placeholder="Supported Attorneys" class="col-4" style="font-size: 10pt;" 
+                                        formControlName="n_SupportedAttorneys" matTooltip="" >
+                        </div>
+                        
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxDirectPhone" >Direct</mat-checkbox> 
+                                <input matInput placeholder="Direct Phone Number" class="col-4" style="font-size: 10pt;" 
+                                        formControlName="n_DirectPhone"  matTooltip="Format: Direct (###) ###-####">
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxMainPhone">Main</mat-checkbox> 
+                                        {{materials.newUserForm.value.n_MainPhone}}
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxMobilePhone" >Mobile</mat-checkbox> 
+                                <input matInput placeholder="Mobile Phone Number" class="col-4" style="font-size: 10pt;" 
+                                        formControlName="n_MobilePhone" matTooltip="Format: (###) ###-#### (mobile)" >
+                        </div>
+                               
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxFirmName" >Firm Name</mat-checkbox> 
+                                <input matInput placeholder="Allen Matkins Leck Gamble Mallory & Natsis LLP" class="col-4" style="font-size: 10pt;" formControlName="n_FirmName" >
+                        </div>
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxOfficeAddress">Office Address</mat-checkbox> 
+                                {{materials.newUserForm.value.n_OfficeAddress}}
+                        </div>
+                        
+                        <!-- <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxFax">Fax</mat-checkbox> 
+                                {{materials.newUserForm.value.n_Fax}}
+                        </div> -->
+                        <div class="row">
+                                <mat-checkbox class="col-2" formControlName="cboxEmail" >Email</mat-checkbox> 
+                                <input matInput placeholder="Employee Email Address" class="col-4" formControlName="n_Email" >
+                        </div> 
+                        <div class="row addpadding">
+                                <mat-checkbox class="col-2" formControlName="cboxLogo" >Logo</mat-checkbox> 
+                                <div *ngIf=materials.newUserForm.value.cboxLogo [innerHTML]="addLogo('form')"></div>
+                        </div>  
+                </form>
+        </div>
+        <div *ngIf="addNewUser" class="spacer">&nbsp;</div>
+        <div *ngIf="addNewUser" class="row" >
+                <mat-radio-group class="col-6" [(ngModel)]="city"  > 
+                        <mat-radio-button [value]="city" *ngFor="let city of cities">{{city}}&nbsp;&nbsp;</mat-radio-button>&nbsp;
+                </mat-radio-group>
+                <button mat-raised-button (click)="getOffice(city)">Set Office Details</button>
+        </div>
+        
+        <div *ngIf="addNewUser" class="spacer"><hr /></div>
+                               
+        <div *ngIf="addNewUser" class="row">
+                <div class="outerbox">
+                    <div class="col editorbox" style="font-family: Arial, Helvetica, sans-serif; font-size: 12pt; font-weight:400; color:#464646; line-height: 16pt;">
+                        <div *ngIf="materials.newUserForm.value.cboxEmployeeName" ><div [innerHTML]="add_n_Employee(materials.newUserForm.value.n_EmployeeName)"></div></div>
+                        <!-- <div *ngIf="materials.newUserForm.value.cboxEmployeeTitle && materials.newUserForm.value.n_EmployeeTitle" >{{materials.newUserForm.value.n_EmployeeTitle}}</div> -->
+                        <!-- <div *ngIf="materials.newUsersForm.value.cboxSupportedAttorneys" class='inline' >
+                                        {{materials.newUserForm.value.n_SupportedAttorneys}}
+                        </div> -->
+                        <div [innerHTML]='addPhoneNumbers()' ></div>
+                        
+                        <!-- <div *ngIf="materials.newUserForm.value.cboxFax" style="font-size: 10pt;">{{materials.newUserForm.value.n_Fax}}</div> -->
+                        <div *ngIf="materials.newUserForm.value.cboxEmail" class="inline">
+                                <div [innerHTML]="add_n_EmailLink(materials.newUserForm.value.n_Email)"></div>
+                                <div *ngIf="materials.newUserForm.value.n_BioURL" class="inline">
+                                        <div [innerHTML]="add_n_BioLink(materials.newUserForm.value.n_BioURL)"></div>
+                                </div>
+                        </div>
+                        <div *ngIf="materials.newUserForm.value.cboxFirmName" >Allen Matkins Leck Gamble Mallory & Natsis LLP</div>
+                        <div *ngIf="materials.newUserForm.value.cboxOfficeAddress" >{{materials.newUserForm.value.n_OfficeAddress}}</div>
+                        <div *ngIf="materials.newUserForm.value.cboxLogo"><div [innerHTML]="addLogo('layout')"></div></div> 
+                    </div>
+                </div>
+        </div>
+    
+
+       
+
+
+
+    </div>
+
+</div>
+
+<div class="footer-bar">
+        v2.0 <a href="../../assets/release-2.0.txt" target="_blank">Release Notes</a>
+        <span class='align-right'>&#169; 2019 Allen Matkins </span>
+        
+    </div>
+
+

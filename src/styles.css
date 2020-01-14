@@ -1,0 +1,187 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    zoom: .75;
+}
+
+.main-body {
+    padding-left:50px;
+    padding-right:20px;
+    padding-top:10px;
+    padding-bottom:20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-root {
+    width: 100%;
+    padding-left:0px;
+    padding-right:0px; 
+}
+
+.addpadding {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.align-right {
+    float: right;
+}
+
+body, input[text], button {
+    color: #666666;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12pt;
+  }
+
+.outerbox {
+    padding:30px;
+    border: 1px;
+    border-style: solid;
+    border-color: #666666;
+    min-width: 500px;
+}
+
+.editorbox {
+    padding: 20px;
+    
+}
+
+.person-detail {
+    display: inline-block;
+}
+
+.lightgray {
+    background-color: #f9f9f9;
+}
+
+.header-bar {
+    padding-top:2px;
+    padding-bottom:5px;
+    background: #002a5f;
+    text-align: center;
+    height: 80x;
+  }
+  
+  .header-tag {
+    display: inline-block;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color:#fff;
+    font-size: 42pt;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 200;
+    vertical-align: middle;
+    top: 15px;
+  }
+  
+  .header-img {
+    display: inline-block;
+    height:100px;
+    padding-right:20px;
+    position: relative;
+    left: -30px;
+    vertical-align: middle;
+  }
+  
+  .confidential {
+    display: inline-block;
+    color: #bbb;
+    font-size: 18pt;
+    padding-top: 30px;
+    vertical-align: middle;
+    top: 15px;
+  }
+
+  .person-list {
+    display: block;
+    margin-top: 10px;
+    min-height: 600px;
+    width: 100%;
+    padding-bottom: 15px;
+  }
+
+  .footer-bar {
+    padding:10px;
+    background: #002a5f;
+    text-align: left;
+    color:#ccc;
+    font-size:10pt;
+    }
+
+    .align-right {
+        float: right;
+    }
+  
+    .doublespacer {
+        height: 20px;
+    }
+
+    .spacer {
+        height: 10px;
+    }
+
+    .namedisplay {
+        font-size: 12pt;
+        font-weight: bold;
+    }
+
+    .detailsdisplay {
+        font-size: 10pt;
+        font-weight: 400;
+    }
+
+    .generalbtn {
+        display: inline-block;
+        padding-right: 5px;
+    }
+
+    .large-font {
+        font-size: 14pt;
+    }
+
+    .normal-font {
+        font-size: 12pt;
+    }
+
+    .med-font {
+        font-size: 10pt;
+    }
+
+    .small-font {
+        font-size: 8pt;
+    }
+
+    .xsmall-font {
+        font-size: 4pt;
+    }
+
+    .btn {
+        padding: 0;
+        border: none;
+        /*font: inherit;*/
+        color: inherit;
+        background-color: transparent;
+        /* show a hand cursor on hover; some argue that we
+        should keep the default arrow cursor for buttons */
+        cursor: pointer;
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+
+@media only screen and (max-width: 600px){
+    .mobile-menu { 
+        display: block;
+        font-size: 16pt;
+    }
+}
+   
+
+ 
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

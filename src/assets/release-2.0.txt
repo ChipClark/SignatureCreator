@@ -1,0 +1,12 @@
+September 2019 Signature Creator (version 2.0)
+
+New Features: 
+
+    1. Users can create signature blocks for people who do not yet exist in the personnel database.
+
+Known Issues: 
+ 
+
+Please report any issues to: 
+cclark@allenmatkins.com or mroldan@allenmatkins.com 
+
